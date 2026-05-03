@@ -4,7 +4,8 @@ A full-stack task management application built with Node.js/Express, Prisma, Pos
 
 ## 🚀 Live URL
 
-> **Railway deployment:** `https://your-app.up.railway.app` ← replace after deployment
+> **Railway deployment:** [https://taskmanager-production-9365.up.railway.app](https://taskmanager-production-9365.up.railway.app)
+
 
 ## ✨ Key Features
 - **Premium Light Theme**: Modern, high-contrast white UI with glassmorphism and smooth transitions.

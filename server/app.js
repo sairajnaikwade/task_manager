@@ -12,6 +12,11 @@ import memberRouter    from "./service/members/member.route.js";
 import dashboardRouter from "./service/dashboard/dashboard.route.js";
 import adminRouter     from "./service/admin/admin.route.js";
 import userRouter      from "./service/users/user.route.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -34,6 +39,14 @@ app.use("/api/members",   memberRouter);
 app.use("/api/dashboard", dashboardRouter);
 app.use("/api/admin",     adminRouter);
 app.use("/api/users",     userRouter);
+
+// ─── Static files (Production) ────────────────────────────────────────────────
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+  });
+}
 
 // ─── 404 fallback ─────────────────────────────────────────────────────────────
 app.use((_req, res) => res.status(404).json({ status: "error", data: {}, messages: [{ errcode: "not_found", msgid: 3, field: "route", vals: [] }] }));

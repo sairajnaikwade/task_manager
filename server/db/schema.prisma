@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  password_hash String
+  role          String   @default("member") // "admin" | "member"
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  owned_projects   Project[]       @relation("ProjectOwner")
+  project_members  ProjectMember[]
+  assigned_tasks   Task[]          @relation("TaskAssignee")
+  created_tasks    Task[]          @relation("TaskCreator")
+  comments         TaskComment[]   @relation("CommentAuthor")
+
+  @@map("users")
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  owner_id    String
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  updated_by  String?
+  deleted_at  DateTime?
+  deleted_by  String?
+
+  owner   User            @relation("ProjectOwner", fields: [owner_id], references: [id])
+  members ProjectMember[]
+  tasks   Task[]
+
+  @@map("projects")
+}
+
+model ProjectMember {
+  id         String   @id @default(uuid())
+  project_id String
+  user_id    String
+  role       String   @default("member") // "admin" | "member"
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  project Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([project_id, user_id])
+  @@map("project_members")
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  status      String    @default("todo") // "todo" | "in_progress" | "done"
+  priority    String    @default("normal") // "low" | "normal" | "high" | "urgent"
+  due_date    DateTime?
+  project_id  String
+  assigned_to String?
+  created_by  String
+  is_active   Boolean   @default(true)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  updated_by  String?
+  deleted_at  DateTime?
+  deleted_by  String?
+
+  project  Project       @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  assignee User?         @relation("TaskAssignee", fields: [assigned_to], references: [id])
+  creator  User          @relation("TaskCreator", fields: [created_by], references: [id])
+  comments TaskComment[]
+
+  @@map("tasks")
+}
+
+model TaskComment {
+  id         String   @id @default(uuid())
+  content    String
+  task_id    String
+  user_id    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  task   Task @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  author User @relation("CommentAuthor", fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("task_comments")
+}

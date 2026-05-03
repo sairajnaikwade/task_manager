@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --color-bg: #f8fafc;
+    --color-bg-subtle: #f1f5f9;
+    --color-surface: #ffffff;
+    --color-surface-elevated: #ffffff;
+    --color-border: rgba(0, 0, 0, 0.08);
+    --color-border-strong: rgba(0, 0, 0, 0.14);
+    --color-accent: #6366f1;
+    --color-accent-dim: #4f46e5;
+    --color-accent-glow: rgba(99, 102, 241, 0.15);
+    --color-text: #0f172a;
+    --color-muted: #64748b;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
+    --font-sans: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-float: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    background-image:
+      radial-gradient(ellipse 100% 70% at 15% 0%, rgba(99, 102, 241, 0.05), transparent 55%),
+      radial-gradient(ellipse 80% 50% at 85% 15%, rgba(16, 185, 129, 0.03), transparent 50%);
+    background-attachment: fixed;
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: rgba(129, 140, 248, 0.35);
+    color: var(--color-text);
+  }
+}
+
+@layer components {
+  .tm-input {
+    @apply w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition-all duration-200;
+    background: var(--color-bg-subtle);
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .tm-input:focus {
+    border-color: rgba(129, 140, 248, 0.45);
+    box-shadow: 0 0 0 3px var(--color-accent-glow);
+  }
+
+  .tm-input::placeholder {
+    color: var(--color-muted);
+    opacity: 0.7;
+  }
+
+  /* Make sure calendar picker icons are visible and clickable */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.6;
+  }
+
+  input[type="date"] {
+    position: relative;
+  }
+
+  .tm-btn-primary {
+    @apply rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 disabled:opacity-45;
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #4f46e5 100%);
+    color: #fff;
+    box-shadow: 0 4px 20px -4px rgba(99, 102, 241, 0.55);
+  }
+
+  .tm-btn-primary:hover:not(:disabled) {
+    filter: brightness(1.06);
+    box-shadow: 0 8px 28px -6px rgba(99, 102, 241, 0.65);
+    transform: translateY(-1px);
+  }
+
+  .tm-btn-secondary {
+    @apply rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-200;
+    border-color: var(--color-border-strong);
+    color: var(--color-muted);
+    background: transparent;
+  }
+
+  .tm-btn-secondary:hover {
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--color-text);
+  }
+
+  .tm-card {
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
+    background: linear-gradient(
+      165deg,
+      var(--color-surface) 0%,
+      var(--color-surface-elevated) 100%
+    );
+    box-shadow: var(--shadow-card);
+  }
+
+  .tm-modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(10px);
+  }
+
+  .tm-glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--color-border);
+  }
+}

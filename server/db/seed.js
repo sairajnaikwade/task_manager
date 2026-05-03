@@ -63,29 +63,34 @@ async function main() {
   const past3    = new Date(now.getTime() -  3 * 24 * 60 * 60 * 1000); // overdue
 
   // ─── Tasks ────────────────────────────────────────────────────────────────
-  const tasks = [
-    { title: "Set up CI/CD pipeline",           status: "todo",        due_date: future30, assigned_to: alice.id },
-    { title: "Design landing page mockup",       status: "todo",        due_date: future7,  assigned_to: bob.id   },
-    { title: "Implement authentication module",  status: "in_progress", due_date: future7,  assigned_to: admin.id },
-    { title: "Write API documentation",          status: "in_progress", due_date: future30, assigned_to: alice.id },
-    { title: "Deploy to Railway staging",        status: "done",        due_date: null,     assigned_to: admin.id },
-    { title: "Fix payment gateway integration",  status: "in_progress", due_date: past3,    assigned_to: bob.id   }, // OVERDUE
-  ];
+  const existingTasksCount = await db.task.count({ where: { project_id: project.id } });
+  
+  if (existingTasksCount === 0) {
+    const tasks = [
+      { title: "Set up CI/CD pipeline",           status: "todo",        due_date: future30, assigned_to: alice.id },
+      { title: "Design landing page mockup",       status: "todo",        due_date: future7,  assigned_to: bob.id   },
+      { title: "Implement authentication module",  status: "in_progress", due_date: future7,  assigned_to: admin.id },
+      { title: "Write API documentation",          status: "in_progress", due_date: future30, assigned_to: alice.id },
+      { title: "Deploy to Railway staging",        status: "done",        due_date: null,     assigned_to: admin.id },
+      { title: "Fix payment gateway integration",  status: "in_progress", due_date: past3,    assigned_to: bob.id   }, // OVERDUE
+    ];
 
-  for (const t of tasks) {
-    await db.task.create({
-      data: {
-        title:       t.title,
-        status:      t.status,
-        due_date:    t.due_date,
-        project_id:  project.id,
-        assigned_to: t.assigned_to,
-        created_by:  admin.id,
-      },
-    });
+    for (const t of tasks) {
+      await db.task.create({
+        data: {
+          title:       t.title,
+          status:      t.status,
+          due_date:    t.due_date,
+          project_id:  project.id,
+          assigned_to: t.assigned_to,
+          created_by:  admin.id,
+        },
+      });
+    }
+    console.log("✅ Seed complete!");
+  } else {
+    console.log("⏩ Database already seeded. Skipping task creation.");
   }
-
-  console.log("✅ Seed complete!");
   console.log("   admin@demo.com  / Admin1234!");
   console.log("   alice@demo.com  / Member1234!");
   console.log("   bob@demo.com    / Member1234!");

@@ -83,7 +83,7 @@ const Dashboard = () => {
 
   const deleteTaskMutation = useDeleteTask();
 
-  const currentUser = (() => { try { return JSON.parse(localStorage.getItem("user")); } catch { return null; } })();
+  const currentUser = (() => { try { return JSON.parse(sessionStorage.getItem("user")); } catch { return null; } })();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["dashboard"],

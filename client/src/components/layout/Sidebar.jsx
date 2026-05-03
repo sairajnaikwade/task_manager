@@ -9,7 +9,7 @@ const navLinks = [
 const Sidebar = () => {
   const user = (() => {
     try {
-      return JSON.parse(localStorage.getItem("user"));
+      return JSON.parse(sessionStorage.getItem("user"));
     } catch {
       return null;
     }

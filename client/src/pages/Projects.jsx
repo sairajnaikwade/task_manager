@@ -19,7 +19,7 @@ const Projects = () => {
   const [editFormData, setEditFormData]   = useState({ id: "", name: "", description: "" });
   const [editFormError, setEditFormError] = useState(null);
 
-  const currentUser = (() => { try { return JSON.parse(localStorage.getItem("user")); } catch { return null; } })();
+  const currentUser = (() => { try { return JSON.parse(sessionStorage.getItem("user")); } catch { return null; } })();
   const isAdmin = currentUser?.role === "admin";
 
   const handleCreate = async (e) => {

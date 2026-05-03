@@ -18,7 +18,7 @@ const TaskDetail = () => {
 
   const isOverdue = task.due_date && new Date(task.due_date) < new Date() && task.status !== "done";
 
-  const currentUser = (() => { try { return JSON.parse(localStorage.getItem("user")); } catch { return null; } })();
+  const currentUser = (() => { try { return JSON.parse(sessionStorage.getItem("user")); } catch { return null; } })();
   const isAdmin = currentUser?.role === "admin";
   const isAssignee = task.assigned_to === currentUser?.id;
   const isCreator = task.created_by === currentUser?.id;

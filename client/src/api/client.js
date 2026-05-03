@@ -8,7 +8,7 @@ const client = axios.create({
 
 // ─── Request interceptor ─────────────────────────────────────────────────────
 client.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   if (token) config.headers["Authorization"] = `Bearer ${token}`;
   config.headers["ver"] = "1";
   config.headers["X-TaskManager-Trace-ID"] = generateTraceId();

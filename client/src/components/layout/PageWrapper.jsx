@@ -7,7 +7,7 @@ const PageWrapper = ({ children, title }) => {
   const navigate = useNavigate();
   const user = (() => {
     try {
-      return JSON.parse(localStorage.getItem("user"));
+      return JSON.parse(sessionStorage.getItem("user"));
     } catch {
       return null;
     }
@@ -16,8 +16,8 @@ const PageWrapper = ({ children, title }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
     navigate("/login");
   };
 

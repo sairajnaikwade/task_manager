@@ -11,16 +11,16 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState(null);
 
-  const getToken = () => localStorage.getItem(TOKEN_KEY);
+  const getToken = () => sessionStorage.getItem(TOKEN_KEY);
   const getUser  = () => {
-    try { return JSON.parse(localStorage.getItem(USER_KEY)); }
+    try { return JSON.parse(sessionStorage.getItem(USER_KEY)); }
     catch { return null; }
   };
   const isAuthenticated = () => !!getToken();
 
   const saveSession = (token, user) => {
-    localStorage.setItem(TOKEN_KEY, token);
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    sessionStorage.setItem(TOKEN_KEY, token);
+    sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   };
 
   const login = useCallback(async ({ email, password }) => {
@@ -66,8 +66,8 @@ export const useAuth = () => {
   }, [navigate]);
 
   const logout = useCallback(() => {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(USER_KEY);
     navigate("/login");
   }, [navigate]);
 

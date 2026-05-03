@@ -14,7 +14,7 @@ const AdminPanel = () => {
   const [formError, setFormError] = useState("");
 
   const users = usersData?.items ?? [];
-  const currentUser = (() => { try { return JSON.parse(localStorage.getItem("user")); } catch { return null; } })();
+  const currentUser = (() => { try { return JSON.parse(sessionStorage.getItem("user")); } catch { return null; } })();
 
   const handleRoleToggle = async (user) => {
     const newRole = user.role === "admin" ? "member" : "admin";

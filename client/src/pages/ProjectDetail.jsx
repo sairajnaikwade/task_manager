@@ -37,7 +37,7 @@ const ProjectDetail = () => {
   const [taskForm, setTaskForm]         = useState(emptyTaskForm);
   const [taskError, setTaskError]       = useState(null);
 
-  const user = (() => { try { return JSON.parse(localStorage.getItem("user")); } catch { return null; } })();
+  const user = (() => { try { return JSON.parse(sessionStorage.getItem("user")); } catch { return null; } })();
   const myMembership = project?.members?.find((m) => m.user_id === user?.id);
   const myRole = myMembership?.role ?? "member";
   const isAdmin = user?.role === "admin";

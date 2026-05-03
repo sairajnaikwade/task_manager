@@ -6,7 +6,16 @@ A full-stack task management application built with Node.js/Express, Prisma, Pos
 
 > **Railway deployment:** `https://your-app.up.railway.app` ← replace after deployment
 
+## ✨ Key Features
+- **Premium Light Theme**: Modern, high-contrast white UI with glassmorphism and smooth transitions.
+- **Project-Level RBAC**: Secure access control where permissions are tied to project roles and task assignments.
+- **Global Task Assignment**: Assign tasks to any registered user in the system, automatically granting them project access.
+- **Priority Tracking**: Integrated priority badges (`Urgent`, `High`, `Normal`, `Low`).
+- **Soft-Delete Audit**: Deleted tasks are stored in a read-only audit log.
+- **Real-time Comments**: Contextual discussions on every task.
+
 ---
+
 
 ## 🔑 Test Credentials
 
@@ -106,11 +115,12 @@ All list endpoints accept `{ data: { filter, search, sort, page, per_page } }` i
 
 ## 🚂 Railway Deployment
 
-1. Create a new Railway project
-2. Add PostgreSQL plugin (auto-sets `DATABASE_URL`)
-3. Add a Node.js service pointing to the repo root
-4. Set environment variables:
-   - `JWT_SECRET` — strong random secret
-   - `NODE_ENV` = `production`
-5. Set build command: `cd server && npm run build`
-6. Set start command: `cd server && npm start`
+1. Create a new Railway project.
+2. Add the **PostgreSQL** plugin (Railway will automatically provide the `DATABASE_URL`).
+3. Connect your GitHub repository.
+4. Set the following **Environment Variables**:
+   - `JWT_SECRET`: (A strong random string)
+   - `NODE_ENV`: `production`
+5. Railway will automatically detect the root `package.json` and use:
+   - **Build Command**: `npm run build`
+   - **Start Command**: `npm start`

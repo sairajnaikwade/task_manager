@@ -79,8 +79,12 @@ const AdminPanel = () => {
                   <p className="text-xs" style={{ color: "var(--color-muted)" }}>{u.email}</p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="text-xs px-2 py-0.5 rounded-full capitalize font-medium"
-                    style={{ background: u.role === "admin" ? "#312e81" : "#1e293b", color: u.role === "admin" ? "#a5b4fc" : "#94a3b8" }}>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full capitalize font-semibold"
+                    style={{ 
+                      background: u.role === "admin" ? "rgba(129, 140, 248, 0.12)" : "rgba(148, 163, 184, 0.12)", 
+                      color: u.role === "admin" ? "var(--color-accent)" : "var(--color-muted)",
+                      border: u.role === "admin" ? "1px solid rgba(129, 140, 248, 0.25)" : "1px solid rgba(148, 163, 184, 0.25)"
+                    }}>
                     {u.role}
                   </span>
                   {u.id !== currentUser?.id && (

@@ -76,10 +76,11 @@ async function main() {
     const tasks = [
       { title: "Set up CI/CD pipeline",           status: "todo",        due_date: future30, assigned_to: alice.id },
       { title: "Design landing page mockup",       status: "todo",        due_date: future7,  assigned_to: bob.id   },
-      { title: "Implement authentication module",  status: "in_progress", due_date: future7,  assigned_to: admin.id },
-      { title: "Write API documentation",          status: "in_progress", due_date: future30, assigned_to: alice.id },
-      { title: "Deploy to Railway staging",        status: "done",        due_date: null,     assigned_to: admin.id },
+      { title: "Implement authentication module",  status: "in_progress", due_date: future7,  assigned_to: alice.id },
+      { title: "Write API documentation",          status: "in_progress", due_date: future30, assigned_to: bob.id },
+      { title: "Deploy to Railway staging",        status: "done",        due_date: null,     assigned_to: alice.id },
       { title: "Fix payment gateway integration",  status: "in_progress", due_date: past3,    assigned_to: bob.id   }, // OVERDUE
+          { title: "Review project progress",          status: "in_progress", due_date: future7,     assigned_to: admin.id },
     ];
 
     for (const t of tasks) {

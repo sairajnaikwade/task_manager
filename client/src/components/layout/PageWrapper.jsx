@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LogOut, Menu } from "lucide-react";
+import { LogOut, Menu, Sun, Moon } from "lucide-react";
+import { useTheme } from "../../context/ThemeContext";
 import Sidebar from "./Sidebar";
 
 const PageWrapper = ({ children, title }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const user = (() => {
     try {
@@ -64,6 +66,16 @@ const PageWrapper = ({ children, title }) => {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="flex h-10 w-10 items-center justify-center rounded-xl transition-all hover:bg-black/[0.05] dark:hover:bg-white/[0.05]"
+              style={{ color: "var(--color-text)" }}
+              title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            >
+              {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+            </button>
+
             <div 
               className="hidden text-right sm:block cursor-pointer"
               onClick={() => setDropdownOpen(!dropdownOpen)}

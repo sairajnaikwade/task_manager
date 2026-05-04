@@ -195,7 +195,7 @@ const Dashboard = () => {
   return (
     <PageWrapper title="Dashboard">
       {/* Stat grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         <StatCard label="All Tasks"    value={total_tasks}         color="#6366f1" icon={<List size={20} />} active={activeFilter === "all"} onClick={() => { setCurrentPage(1); setActiveFilter("all"); }} />
         <StatCard label="New"          value={by_status?.todo}      color="#a855f7" icon={<Sparkles size={20} />} active={activeFilter === "todo"} onClick={() => { setCurrentPage(1); setActiveFilter("todo"); }} />
         <StatCard label="In Progress"   value={by_status?.in_progress} color="#60a5fa" icon={<Settings size={20} />} active={activeFilter === "in_progress"} onClick={() => { setCurrentPage(1); setActiveFilter("in_progress"); }} />
@@ -206,7 +206,7 @@ const Dashboard = () => {
 
       {/* Filtered tasks */}
       <div
-        className="flex flex-col rounded-2xl border"
+        className="flex flex-col rounded-2xl border overflow-hidden"
         style={{
           background: "linear-gradient(165deg, var(--color-surface) 0%, var(--color-surface-elevated) 100%)",
           borderColor: "var(--color-border-strong)",
@@ -214,7 +214,7 @@ const Dashboard = () => {
         }}
       >
         <div
-          className="flex flex-col items-start justify-between gap-4 border-b p-6 sm:flex-row sm:items-center"
+          className="flex flex-col items-start justify-between gap-4 border-b p-4 sm:p-6 sm:flex-row sm:items-center"
           style={{ borderColor: "var(--color-border)" }}
         >
           <div className="flex items-center gap-3">
@@ -222,17 +222,17 @@ const Dashboard = () => {
             {tasksLoading && <span className="text-xs" style={{ color: "var(--color-muted)" }}>Loading...</span>}
           </div>
           
-          <div className="flex items-center gap-3 w-full sm:w-auto relative">
-            <div className="relative">
+          <div className="flex items-center gap-2 w-full sm:w-auto relative">
+            <div className="relative shrink-0">
               <button 
                 onClick={() => {
                   if (!showFilters) setTempFilters(advancedFilters);
                   setShowFilters(!showFilters);
                 }}
-                className="relative flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors hover:bg-white/[0.04]"
+                className="relative flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-semibold transition-colors hover:bg-white/[0.04]"
                 style={{ background: showFilters ? "var(--color-bg-subtle)" : "transparent", borderColor: "var(--color-border)", color: "var(--color-text)" }}
               >
-                <Filter size={16} /> Filter
+                <Filter size={16} /> <span className="hidden xs:inline">Filter</span>
                 {(advancedFilters.status.length > 0 || advancedFilters.assignee_id.length > 0 || advancedFilters.date.length > 0 || advancedFilters.priority.length > 0 || advancedFilters.specific_date) && (
                   <span className="w-2 h-2 rounded-full absolute top-1 right-2" style={{ background: "var(--color-accent)" }}></span>
                 )}
@@ -383,12 +383,12 @@ const Dashboard = () => {
               placeholder="Search tasks..." 
               value={searchQuery}
               onChange={(e) => { setCurrentPage(1); setSearchQuery(e.target.value); }}
-              className="tm-input w-full sm:w-72"
+              className="tm-input flex-1 sm:w-72"
             />
           </div>
         </div>
         
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto scrollbar-thin">
           <table className="w-full border-collapse text-left">
             <thead>
               <tr
@@ -399,23 +399,23 @@ const Dashboard = () => {
                   color: "var(--color-muted)",
                 }}
               >
-                <th className="cursor-pointer px-6 py-4 transition-colors select-none hover:text-[var(--color-text)]" onClick={() => handleSort('title')}>
+                <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[140px]" onClick={() => handleSort('title')}>
                   Title <SortIcon column="title" sortConfig={sortConfig} />
                 </th>
-                <th className="cursor-pointer px-6 py-4 transition-colors select-none hover:text-[var(--color-text)]" onClick={() => handleSort('project_id')}>
+                <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[120px]" onClick={() => handleSort('project_id')}>
                   Project <SortIcon column="project_id" sortConfig={sortConfig} />
                 </th>
-                <th className="cursor-pointer px-6 py-4 transition-colors select-none hover:text-[var(--color-text)]" onClick={() => handleSort('status')}>
+                <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[110px]" onClick={() => handleSort('status')}>
                   Status <SortIcon column="status" sortConfig={sortConfig} />
                 </th>
-                <th className="cursor-pointer px-6 py-4 transition-colors select-none hover:text-[var(--color-text)]" onClick={() => handleSort('priority')}>
+                <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[100px]" onClick={() => handleSort('priority')}>
                   Priority <SortIcon column="priority" sortConfig={sortConfig} />
                 </th>
-                <th className="cursor-pointer px-6 py-4 transition-colors select-none hover:text-[var(--color-text)]" onClick={() => handleSort('due_date')}>
+                <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[120px]" onClick={() => handleSort('due_date')}>
                   Deadline <SortIcon column="due_date" sortConfig={sortConfig} />
                 </th>
-                <th className="px-6 py-4">Assignee</th>
-                <th className="px-6 py-4 text-right">Actions</th>
+                <th className="px-4 sm:px-6 py-3 sm:py-4 min-w-[140px]">Assignee</th>
+                <th className="px-4 sm:px-6 py-3 sm:py-4 text-right min-w-[100px]">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -441,20 +441,20 @@ const Dashboard = () => {
                       style={{ borderColor: "var(--color-border)" }}
                       onClick={() => navigate(`/tasks/${task.id}`)}
                     >
-                      <td className="px-6 py-4">
+                      <td className="px-4 sm:px-6 py-3 sm:py-4">
                         <p
                           className="text-sm font-medium text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)]"
                         >
                           {task.title}
                         </p>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 sm:px-6 py-3 sm:py-4">
                         <p className="text-sm" style={{ color: "var(--color-muted)" }}>{task.project?.name}</p>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 sm:px-6 py-3 sm:py-4">
                         <StatusBadge status={isOverdue ? "overdue" : task.status} />
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 sm:px-6 py-3 sm:py-4">
                         <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full`} 
                           style={{ 
                             background: task.priority === 'urgent' ? '#ef444422' : task.priority === 'high' ? '#f9731622' : task.priority === 'normal' ? '#3b82f622' : '#10b98122',
@@ -464,10 +464,10 @@ const Dashboard = () => {
                         {task.priority}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 sm:px-6 py-3 sm:py-4">
                         <p className="text-sm" style={{ color: "var(--color-muted)" }}>{formatDate(task.due_date)}</p>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 sm:px-6 py-3 sm:py-4">
                         {task.assignee ? (
                           <div>
                             <p className="text-sm font-medium" style={{ color: "var(--color-text)" }}>{task.assignee.name}</p>
@@ -477,7 +477,7 @@ const Dashboard = () => {
                           <p className="text-sm" style={{ color: "var(--color-muted)" }}>Unassigned</p>
                         )}
                       </td>
-                      <td className="px-6 py-4 text-right flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
+                      <td className="px-4 sm:px-6 py-3 sm:py-4 text-right flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
                         <Link
                           to={`/tasks/${task.id}?mode=view`}
                           className="rounded-lg p-1.5 text-[var(--color-muted)] transition-colors hover:bg-black/[0.04] hover:text-[var(--color-accent)]"

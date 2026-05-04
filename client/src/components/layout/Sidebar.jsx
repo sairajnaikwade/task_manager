@@ -6,7 +6,7 @@ const navLinks = [
   { to: "/projects", label: "Projects", Icon: FolderKanban },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
   const user = (() => {
     try {
       return JSON.parse(sessionStorage.getItem("user"));
@@ -31,12 +31,14 @@ const Sidebar = () => {
 
   return (
     <aside
-      className="fixed top-0 left-0 z-40 flex h-full w-64 flex-col border-r border-[var(--color-border)]"
+      className={`fixed top-0 left-0 z-50 flex h-full w-64 flex-col border-r border-[var(--color-border)] transition-transform duration-300 lg:translate-x-0 ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
       style={{
         background: "var(--color-bg-subtle)",
       }}
     >
-      <div className="border-b border-[var(--color-border)] px-5 py-6">
+      <div className="flex items-center justify-between border-b border-[var(--color-border)] px-5 py-6">
         <div className="flex items-center gap-3">
           <div
             className="flex h-10 w-10 items-center justify-center rounded-xl text-lg font-bold text-white shadow-lg"
@@ -56,17 +58,40 @@ const Sidebar = () => {
             </span>
           </div>
         </div>
+        <button
+          onClick={onClose}
+          className="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-black/[0.05] lg:hidden"
+          style={{ color: "var(--color-muted)" }}
+        >
+          ✕
+        </button>
       </div>
 
       <nav className="flex flex-1 flex-col gap-1 px-3 py-5">
         {navLinks.map(({ to, label, Icon }) => (
-          <NavLink key={to} to={to} end={to === "/"} className={linkClass} style={linkStyle}>
+          <NavLink 
+            key={to} 
+            to={to} 
+            end={to === "/"} 
+            className={linkClass} 
+            style={linkStyle}
+            onClick={() => {
+              if (window.innerWidth < 1024) onClose();
+            }}
+          >
             <Icon size={18} strokeWidth={2} className="shrink-0 opacity-90" />
             {label}
           </NavLink>
         ))}
         {user?.role === "admin" && (
-          <NavLink to="/admin" className={linkClass} style={linkStyle}>
+          <NavLink 
+            to="/admin" 
+            className={linkClass} 
+            style={linkStyle}
+            onClick={() => {
+              if (window.innerWidth < 1024) onClose();
+            }}
+          >
             <Shield size={18} strokeWidth={2} className="shrink-0 opacity-90" />
             Admin Panel
           </NavLink>

@@ -1,10 +1,12 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { LogOut, Menu } from "lucide-react";
 import Sidebar from "./Sidebar";
 
 const PageWrapper = ({ children, title }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const user = (() => {
     try {
       return JSON.parse(sessionStorage.getItem("user"));
@@ -15,6 +17,11 @@ const PageWrapper = ({ children, title }) => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  // Close sidebar on navigation on mobile
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location]);
+
   const logout = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("user");
@@ -23,20 +30,38 @@ const PageWrapper = ({ children, title }) => {
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar />
-      <main className="ml-64 flex min-h-screen flex-1 flex-col">
-        <header className="tm-glass sticky top-0 z-30 flex h-[4.25rem] shrink-0 items-center justify-between px-6 lg:px-10">
-          <div>
-            <h1 className="text-lg font-bold tracking-tight text-[var(--color-text)] lg:text-xl">
-              {title || ""}
-            </h1>
-            <p className="mt-0.5 hidden text-xs font-medium text-[var(--color-muted)] sm:block">
-              {new Date().toLocaleDateString(undefined, {
-                weekday: "long",
-                month: "short",
-                day: "numeric",
-              })}
-            </p>
+      {/* Sidebar Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      
+      <main className="flex min-h-screen flex-1 flex-col transition-all duration-300 lg:ml-64">
+        <header className="tm-glass sticky top-0 z-30 flex h-[4.25rem] shrink-0 items-center justify-between px-4 lg:px-10">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="flex h-10 w-10 items-center justify-center rounded-xl hover:bg-black/[0.05] lg:hidden"
+              style={{ color: "var(--color-text)" }}
+            >
+              <Menu size={24} />
+            </button>
+            <div>
+              <h1 className="text-lg font-bold tracking-tight text-[var(--color-text)] lg:text-xl">
+                {title || ""}
+              </h1>
+              <p className="mt-0.5 hidden text-xs font-medium text-[var(--color-muted)] sm:block">
+                {new Date().toLocaleDateString(undefined, {
+                  weekday: "long",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </p>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <div 
@@ -129,7 +154,7 @@ const PageWrapper = ({ children, title }) => {
         </header>
 
         <div className="flex-1 overflow-auto">
-          <div className="mx-auto max-w-7xl px-6 py-8 lg:px-10">{children}</div>
+          <div className="mx-auto max-w-7xl px-4 py-6 lg:px-10 lg:py-8">{children}</div>
         </div>
       </main>
     </div>

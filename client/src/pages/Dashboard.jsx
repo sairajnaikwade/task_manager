@@ -195,7 +195,7 @@ const Dashboard = () => {
   return (
     <PageWrapper title="Dashboard">
       {/* Stat grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8">
         <StatCard label="All Tasks"    value={total_tasks}         color="#6366f1" icon={<List size={20} />} active={activeFilter === "all"} onClick={() => { setCurrentPage(1); setActiveFilter("all"); }} />
         <StatCard label="New"          value={by_status?.todo}      color="#a855f7" icon={<Sparkles size={20} />} active={activeFilter === "todo"} onClick={() => { setCurrentPage(1); setActiveFilter("todo"); }} />
         <StatCard label="In Progress"   value={by_status?.in_progress} color="#60a5fa" icon={<Settings size={20} />} active={activeFilter === "in_progress"} onClick={() => { setCurrentPage(1); setActiveFilter("in_progress"); }} />
@@ -203,8 +203,6 @@ const Dashboard = () => {
         <StatCard label="Overdue"        value={overdue}              color="#f87171" icon={<AlertTriangle size={20} />} active={activeFilter === "overdue"} onClick={() => { setCurrentPage(1); setActiveFilter("overdue"); }} />
         <StatCard label="Deleted"        value={deletedCount}        color="#94a3b8" icon={<Trash2 size={20} />} active={activeFilter === "deleted"} onClick={() => { setCurrentPage(1); setActiveFilter("deleted"); }} />
       </div>
-
-
 
       {/* Filtered tasks */}
       <div
@@ -241,7 +239,7 @@ const Dashboard = () => {
               </button>
               
               {showFilters && (
-                <div className="absolute right-0 top-full mt-2 w-[320px] sm:w-[480px] max-w-[100vw] rounded-xl shadow-2xl border z-50 flex flex-col overflow-hidden" style={{ background: "var(--color-surface)", borderColor: "var(--color-border)" }}>
+                <div className="absolute right-0 top-full mt-2 w-[280px] sm:w-[480px] max-w-[calc(100vw-2rem)] rounded-xl shadow-2xl border z-50 flex flex-col overflow-hidden" style={{ background: "var(--color-surface)", borderColor: "var(--color-border)" }}>
                   <div className="flex h-64">
                     {/* Sidebar Categories */}
                     <div className="w-28 sm:w-36 border-r flex flex-col shrink-0" style={{ borderColor: "var(--color-border)", background: "rgba(255,255,255,0.02)" }}>

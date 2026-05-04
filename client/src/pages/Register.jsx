@@ -38,7 +38,7 @@ const Register = () => {
         </div>
 
         <div
-          className="rounded-2xl border p-8"
+          className="rounded-2xl border p-6 sm:p-8"
           style={{
             background: "linear-gradient(165deg, var(--color-surface) 0%, var(--color-surface-elevated) 100%)",
             borderColor: "var(--color-border-strong)",

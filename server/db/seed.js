@@ -31,12 +31,13 @@ async function main() {
   // ─── Project ─────────────────────────────────────────────────────────────
   const project = await db.project.upsert({
     where:  { id: "00000000-0000-0000-0000-000000000001" },
-    update: {},
+    update: { is_active: true }, // Ensure demo project is reactivated
     create: {
       id:          "00000000-0000-0000-0000-000000000001",
       name:        "Team Task Manager Demo",
       description: "A sample project pre-seeded for evaluators to explore the full feature set.",
       owner_id:    admin.id,
+      is_active:   true,
     },
   });
 
@@ -63,7 +64,13 @@ async function main() {
   const past3    = new Date(now.getTime() -  3 * 24 * 60 * 60 * 1000); // overdue
 
   // ─── Tasks ────────────────────────────────────────────────────────────────
-  const existingTasksCount = await db.task.count({ where: { project_id: project.id } });
+  // Reactivate any existing tasks for this project to ensure they show up
+  await db.task.updateMany({
+    where: { project_id: project.id },
+    data:  { is_active: true },
+  });
+
+  const existingTasksCount = await db.task.count({ where: { project_id: project.id, is_active: true } });
   
   if (existingTasksCount === 0) {
     const tasks = [
@@ -84,6 +91,7 @@ async function main() {
           project_id:  project.id,
           assigned_to: t.assigned_to,
           created_by:  admin.id,
+          is_active:   true,
         },
       });
     }

@@ -64,42 +64,36 @@ async function main() {
   const past3    = new Date(now.getTime() -  3 * 24 * 60 * 60 * 1000); // overdue
 
   // ─── Tasks ────────────────────────────────────────────────────────────────
-  // Reactivate any existing tasks for this project to ensure they show up
-  await db.task.updateMany({
+  // Delete existing tasks for this project to ensure a fresh demo state
+  await db.task.deleteMany({
     where: { project_id: project.id },
-    data:  { is_active: true },
   });
 
-  const existingTasksCount = await db.task.count({ where: { project_id: project.id, is_active: true } });
-  
-  if (existingTasksCount === 0) {
-    const tasks = [
-      { title: "Set up CI/CD pipeline",           status: "todo",        due_date: future30, assigned_to: alice.id },
-      { title: "Design landing page mockup",       status: "todo",        due_date: future7,  assigned_to: bob.id   },
-      { title: "Implement authentication module",  status: "in_progress", due_date: future7,  assigned_to: alice.id },
-      { title: "Write API documentation",          status: "in_progress", due_date: future30, assigned_to: bob.id },
-      { title: "Deploy to Railway staging",        status: "done",        due_date: null,     assigned_to: alice.id },
-      { title: "Fix payment gateway integration",  status: "in_progress", due_date: past3,    assigned_to: bob.id   }, // OVERDUE
-          { title: "Review project progress",          status: "in_progress", due_date: future7,     assigned_to: admin.id },
-    ];
+  const tasks = [
+    { title: "Implement OAuth2 Login with Google",      status: "in_progress", due_date: future7,  assigned_to: alice.id },
+    { title: "Design User Profile Dashboard UI",        status: "todo",        due_date: future30, assigned_to: bob.id   },
+    { title: "Set up PostgreSQL database schema",       status: "done",        due_date: null,     assigned_to: admin.id },
+    { title: "Write unit tests for authentication API", status: "todo",        due_date: future30, assigned_to: alice.id },
+    { title: "Fix responsive layout on mobile devices", status: "in_progress", due_date: past3,    assigned_to: bob.id   }, // OVERDUE
+    { title: "Configure CI/CD pipeline",                status: "done",        due_date: null,     assigned_to: alice.id },
+    { title: "Optimize image loading performance",      status: "todo",        due_date: future7,  assigned_to: bob.id   },
+  ];
 
-    for (const t of tasks) {
-      await db.task.create({
-        data: {
-          title:       t.title,
-          status:      t.status,
-          due_date:    t.due_date,
-          project_id:  project.id,
-          assigned_to: t.assigned_to,
-          created_by:  admin.id,
-          is_active:   true,
-        },
-      });
-    }
-    console.log("✅ Seed complete!");
-  } else {
-    console.log("⏩ Database already seeded. Skipping task creation.");
+  for (const t of tasks) {
+    await db.task.create({
+      data: {
+        title:       t.title,
+        status:      t.status,
+        due_date:    t.due_date,
+        project_id:  project.id,
+        assigned_to: t.assigned_to,
+        created_by:  admin.id,
+        is_active:   true,
+      },
+    });
   }
+  console.log("✅ Seed complete!");
+
   console.log("   admin@demo.com  / Admin1234!");
   console.log("   alice@demo.com  / Member1234!");
   console.log("   bob@demo.com    / Member1234!");

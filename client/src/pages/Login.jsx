@@ -89,7 +89,7 @@ const Login = () => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} autoComplete="off" className="flex flex-col gap-5">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div>
               <label
                 htmlFor="login-email"
@@ -98,11 +98,11 @@ const Login = () => {
                 Email
               </label>
               <input
-                id="login-user-identifier"
+                id="email"
                 type="email"
-                name="user_identifier"
+                name="email"
                 required
-                autoComplete="new-password"
+                autoComplete="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="tm-input"
@@ -118,11 +118,11 @@ const Login = () => {
                 Password
               </label>
               <input
-                id="login-user-secret"
+                id="password"
                 type="password"
-                name="user_secret"
+                name="password"
                 required
-                autoComplete="new-password"
+                autoComplete="current-password"
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 className="tm-input"

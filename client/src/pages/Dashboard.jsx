@@ -399,23 +399,23 @@ const Dashboard = () => {
                   color: "var(--color-muted)",
                 }}
               >
-                <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[140px]" onClick={() => handleSort('title')}>
+                <th className="cursor-pointer px-3 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[120px]" onClick={() => handleSort('title')}>
                   Title <SortIcon column="title" sortConfig={sortConfig} />
                 </th>
-                <th className="hidden md:table-cell cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[120px]" onClick={() => handleSort('project_id')}>
+                <th className="hidden md:table-cell cursor-pointer px-3 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[120px]" onClick={() => handleSort('project_id')}>
                   Project <SortIcon column="project_id" sortConfig={sortConfig} />
                 </th>
-                <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[110px]" onClick={() => handleSort('status')}>
+                <th className="cursor-pointer px-3 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[90px]" onClick={() => handleSort('status')}>
                   Status <SortIcon column="status" sortConfig={sortConfig} />
                 </th>
-                <th className="hidden sm:table-cell cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[100px]" onClick={() => handleSort('priority')}>
+                <th className="hidden sm:table-cell cursor-pointer px-3 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[100px]" onClick={() => handleSort('priority')}>
                   Priority <SortIcon column="priority" sortConfig={sortConfig} />
                 </th>
-                <th className="hidden md:table-cell cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[120px]" onClick={() => handleSort('due_date')}>
+                <th className="hidden md:table-cell cursor-pointer px-3 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[120px]" onClick={() => handleSort('due_date')}>
                   Deadline <SortIcon column="due_date" sortConfig={sortConfig} />
                 </th>
-                <th className="hidden sm:table-cell px-4 sm:px-6 py-3 sm:py-4 min-w-[140px]">Assignee</th>
-                <th className="px-4 sm:px-6 py-3 sm:py-4 text-right min-w-[100px]">Actions</th>
+                <th className="hidden sm:table-cell px-3 sm:px-6 py-3 sm:py-4 min-w-[120px]">Assignee</th>
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-right min-w-[80px]">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -441,20 +441,20 @@ const Dashboard = () => {
                       style={{ borderColor: "var(--color-border)" }}
                       onClick={() => navigate(`/tasks/${task.id}`)}
                     >
-                      <td className="px-4 sm:px-6 py-3 sm:py-4">
+                      <td className="px-3 sm:px-6 py-3 sm:py-4">
                         <p
                           className="text-sm font-medium text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)]"
                         >
                           {task.title}
                         </p>
                       </td>
-                      <td className="hidden md:table-cell px-4 sm:px-6 py-3 sm:py-4">
+                      <td className="hidden md:table-cell px-3 sm:px-6 py-3 sm:py-4">
                         <p className="text-sm" style={{ color: "var(--color-muted)" }}>{task.project?.name}</p>
                       </td>
-                      <td className="px-4 sm:px-6 py-3 sm:py-4">
+                      <td className="px-3 sm:px-6 py-3 sm:py-4">
                         <StatusBadge status={isOverdue ? "overdue" : task.status} />
                       </td>
-                      <td className="hidden sm:table-cell px-4 sm:px-6 py-3 sm:py-4">
+                      <td className="hidden sm:table-cell px-3 sm:px-6 py-3 sm:py-4">
                         <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full`} 
                           style={{ 
                             background: task.priority === 'urgent' ? '#ef444422' : task.priority === 'high' ? '#f9731622' : task.priority === 'normal' ? '#3b82f622' : '#10b98122',
@@ -464,10 +464,10 @@ const Dashboard = () => {
                         {task.priority}
                         </span>
                       </td>
-                      <td className="hidden md:table-cell px-4 sm:px-6 py-3 sm:py-4">
+                      <td className="hidden md:table-cell px-3 sm:px-6 py-3 sm:py-4">
                         <p className="text-sm" style={{ color: "var(--color-muted)" }}>{formatDate(task.due_date)}</p>
                       </td>
-                      <td className="hidden sm:table-cell px-4 sm:px-6 py-3 sm:py-4">
+                      <td className="hidden sm:table-cell px-3 sm:px-6 py-3 sm:py-4">
                         {task.assignee ? (
                           <div>
                             <p className="text-sm font-medium" style={{ color: "var(--color-text)" }}>{task.assignee.name}</p>
@@ -477,7 +477,7 @@ const Dashboard = () => {
                           <p className="text-sm" style={{ color: "var(--color-muted)" }}>Unassigned</p>
                         )}
                       </td>
-                      <td className="px-4 sm:px-6 py-3 sm:py-4 text-right flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
+                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-right flex items-center justify-end gap-1 sm:gap-2" onClick={(e) => e.stopPropagation()}>
                         <Link
                           to={`/tasks/${task.id}?mode=view`}
                           className="rounded-lg p-1.5 text-[var(--color-muted)] transition-colors hover:bg-black/[0.04] hover:text-[var(--color-accent)]"

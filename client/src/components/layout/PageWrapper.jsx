@@ -42,7 +42,7 @@ const PageWrapper = ({ children, title }) => {
 
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       
-      <main className="flex min-h-screen flex-1 flex-col transition-all duration-300 lg:ml-64">
+      <main className="flex min-h-screen min-w-0 flex-1 flex-col transition-all duration-300 lg:ml-64">
         <header className="tm-glass sticky top-0 z-30 flex h-[4.25rem] shrink-0 items-center justify-between px-4 lg:px-10">
           <div className="flex items-center gap-4">
             <button

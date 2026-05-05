@@ -1,6 +1,7 @@
 {
   "name": "team_task_manager",
   "version": "1.0.0",
+  "author": "Sairaj Naikwade <sairajnaikwade@github.com>",
   "private": true,
   "scripts": {
     "install": "cd client && npm install && cd ../server && npm install",

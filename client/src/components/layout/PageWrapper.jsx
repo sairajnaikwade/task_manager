@@ -166,7 +166,20 @@ const PageWrapper = ({ children, title }) => {
         </header>
 
         <div className="flex-1 overflow-auto">
-          <div className="mx-auto max-w-7xl px-4 py-6 lg:px-10 lg:py-8">{children}</div>
+          <div className="mx-auto max-w-7xl px-4 py-6 lg:px-10 lg:py-8">
+            {children}
+          </div>
+          
+          {/* Global Footer Branding */}
+          <footer className="mt-auto border-t border-[var(--color-border)] py-6 px-4 lg:px-10">
+            <div className="mx-auto max-w-7xl flex flex-col sm:flex-row justify-between items-center gap-4 text-[var(--color-muted)] text-xs font-medium">
+              <p>© {new Date().getFullYear()} TaskManager. All rights reserved.</p>
+              <div className="flex items-center gap-2 bg-[var(--color-bg-subtle)] px-3 py-1.5 rounded-full border border-[var(--color-border)] shadow-sm">
+                <span>Developed by</span>
+                <span className="font-bold text-[var(--color-text)]">Sairaj Naikwade</span>
+              </div>
+            </div>
+          </footer>
         </div>
       </main>
     </div>

@@ -1,5 +1,7 @@
 # Team Task Manager
 
+Developed by **Sairaj Naikwade**
+
 A full-stack task management application built with Node.js/Express, Prisma, PostgreSQL, React, and TailwindCSS.
 
 ## 🚀 Live URL
@@ -125,3 +127,13 @@ All list endpoints accept `{ data: { filter, search, sort, page, per_page } }` i
 5. Railway will automatically detect the root `package.json` and use:
    - **Build Command**: `npm run build`
    - **Start Command**: `npm start`
+
+---
+
+## 👨‍💻 Author
+
+**Sairaj Naikwade**
+- GitHub: [sairajnaikwade](https://github.com/sairajnaikwade)
+- Role: Full Stack Developer
+
+This project is a personal portfolio piece and should not be redistributed without permission.

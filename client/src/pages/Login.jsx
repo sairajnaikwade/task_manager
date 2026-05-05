@@ -166,6 +166,16 @@ const Login = () => {
             </Link>
           </p>
         )}
+
+        <div className="mt-12 flex flex-col items-center gap-2 opacity-60 transition-opacity hover:opacity-100">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-muted)]">
+            Project Identity
+          </p>
+          <div className="flex items-center gap-2 rounded-full bg-[var(--color-surface-elevated)] border border-[var(--color-border)] px-4 py-2 shadow-sm">
+            <span className="text-xs font-medium text-[var(--color-muted)]">Developed by</span>
+            <span className="text-xs font-bold text-[var(--color-text)]">Sairaj Naikwade</span>
+          </div>
+        </div>
       </div>
     </div>
   );

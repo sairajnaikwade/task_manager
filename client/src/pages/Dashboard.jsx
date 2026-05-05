@@ -195,7 +195,7 @@ const Dashboard = () => {
   return (
     <PageWrapper title="Dashboard">
       {/* Stat grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-6 sm:mb-8">
         <StatCard label="All Tasks"    value={total_tasks}         color="#6366f1" icon={<List size={20} />} active={activeFilter === "all"} onClick={() => { setCurrentPage(1); setActiveFilter("all"); }} />
         <StatCard label="New"          value={by_status?.todo}      color="#a855f7" icon={<Sparkles size={20} />} active={activeFilter === "todo"} onClick={() => { setCurrentPage(1); setActiveFilter("todo"); }} />
         <StatCard label="In Progress"   value={by_status?.in_progress} color="#60a5fa" icon={<Settings size={20} />} active={activeFilter === "in_progress"} onClick={() => { setCurrentPage(1); setActiveFilter("in_progress"); }} />
@@ -402,19 +402,19 @@ const Dashboard = () => {
                 <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[140px]" onClick={() => handleSort('title')}>
                   Title <SortIcon column="title" sortConfig={sortConfig} />
                 </th>
-                <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[120px]" onClick={() => handleSort('project_id')}>
+                <th className="hidden md:table-cell cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[120px]" onClick={() => handleSort('project_id')}>
                   Project <SortIcon column="project_id" sortConfig={sortConfig} />
                 </th>
                 <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[110px]" onClick={() => handleSort('status')}>
                   Status <SortIcon column="status" sortConfig={sortConfig} />
                 </th>
-                <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[100px]" onClick={() => handleSort('priority')}>
+                <th className="hidden sm:table-cell cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[100px]" onClick={() => handleSort('priority')}>
                   Priority <SortIcon column="priority" sortConfig={sortConfig} />
                 </th>
-                <th className="cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[120px]" onClick={() => handleSort('due_date')}>
+                <th className="hidden md:table-cell cursor-pointer px-4 sm:px-6 py-3 sm:py-4 transition-colors select-none hover:text-[var(--color-text)] min-w-[120px]" onClick={() => handleSort('due_date')}>
                   Deadline <SortIcon column="due_date" sortConfig={sortConfig} />
                 </th>
-                <th className="px-4 sm:px-6 py-3 sm:py-4 min-w-[140px]">Assignee</th>
+                <th className="hidden sm:table-cell px-4 sm:px-6 py-3 sm:py-4 min-w-[140px]">Assignee</th>
                 <th className="px-4 sm:px-6 py-3 sm:py-4 text-right min-w-[100px]">Actions</th>
               </tr>
             </thead>
@@ -448,13 +448,13 @@ const Dashboard = () => {
                           {task.title}
                         </p>
                       </td>
-                      <td className="px-4 sm:px-6 py-3 sm:py-4">
+                      <td className="hidden md:table-cell px-4 sm:px-6 py-3 sm:py-4">
                         <p className="text-sm" style={{ color: "var(--color-muted)" }}>{task.project?.name}</p>
                       </td>
                       <td className="px-4 sm:px-6 py-3 sm:py-4">
                         <StatusBadge status={isOverdue ? "overdue" : task.status} />
                       </td>
-                      <td className="px-4 sm:px-6 py-3 sm:py-4">
+                      <td className="hidden sm:table-cell px-4 sm:px-6 py-3 sm:py-4">
                         <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full`} 
                           style={{ 
                             background: task.priority === 'urgent' ? '#ef444422' : task.priority === 'high' ? '#f9731622' : task.priority === 'normal' ? '#3b82f622' : '#10b98122',
@@ -464,10 +464,10 @@ const Dashboard = () => {
                         {task.priority}
                         </span>
                       </td>
-                      <td className="px-4 sm:px-6 py-3 sm:py-4">
+                      <td className="hidden md:table-cell px-4 sm:px-6 py-3 sm:py-4">
                         <p className="text-sm" style={{ color: "var(--color-muted)" }}>{formatDate(task.due_date)}</p>
                       </td>
-                      <td className="px-4 sm:px-6 py-3 sm:py-4">
+                      <td className="hidden sm:table-cell px-4 sm:px-6 py-3 sm:py-4">
                         {task.assignee ? (
                           <div>
                             <p className="text-sm font-medium" style={{ color: "var(--color-text)" }}>{task.assignee.name}</p>

@@ -577,6 +577,17 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+
+      {/* Dashboard Specific Footer Branding */}
+      <footer className="mt-12 border-t border-[var(--color-border)] py-8">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[var(--color-muted)] text-xs font-medium">
+          <p>© {new Date().getFullYear()} TaskManager. All rights reserved.</p>
+          <div className="flex items-center gap-2 bg-[var(--color-bg-subtle)] px-3 py-1.5 rounded-full border border-[var(--color-border)] shadow-sm">
+            <span>Developed by</span>
+            <span className="font-bold text-[var(--color-text)]">Sairaj Naikwade</span>
+          </div>
+        </div>
+      </footer>
     </PageWrapper>
   );
 };

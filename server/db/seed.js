@@ -70,13 +70,16 @@ async function main() {
   });
 
   const tasks = [
-    { title: "Implement OAuth2 Login with Google",      status: "in_progress", due_date: future7,  assigned_to: alice.id },
-    { title: "Design User Profile Dashboard UI",        status: "todo",        due_date: future30, assigned_to: bob.id   },
-    { title: "Set up PostgreSQL database schema",       status: "done",        due_date: null,     assigned_to: admin.id },
-    { title: "Write unit tests for authentication API", status: "todo",        due_date: future30, assigned_to: alice.id },
-    { title: "Fix responsive layout on mobile devices", status: "in_progress", due_date: past3,    assigned_to: bob.id   }, // OVERDUE
-    { title: "Configure CI/CD pipeline",                status: "done",        due_date: null,     assigned_to: alice.id },
-    { title: "Optimize image loading performance",      status: "todo",        due_date: future7,  assigned_to: bob.id   },
+    { title: "Develop REST API for Authentication Service",      status: "in_progress", due_date: future7,  assigned_to: alice.id },
+    { title: "Migrate legacy database to PostgreSQL 15",         status: "todo",        due_date: future30, assigned_to: bob.id   },
+    { title: "Implement Redis caching layer for User Profiles",  status: "done",        due_date: null,     assigned_to: admin.id },
+    { title: "Setup Kubernetes cluster on AWS EKS",              status: "todo",        due_date: future30, assigned_to: alice.id },
+    { title: "Resolve critical security vulnerabilities in npm", status: "in_progress", due_date: past3,    assigned_to: bob.id   }, // OVERDUE
+    { title: "Configure Datadog monitoring and alerts",          status: "done",        due_date: null,     assigned_to: alice.id },
+    { title: "Refactor React components to use custom hooks",    status: "todo",        due_date: future7,  assigned_to: bob.id   },
+    { title: "Write end-to-end Cypress tests for Checkout",      status: "todo",        due_date: future30, assigned_to: alice.id },
+    { title: "Design Figma mockups for Admin Dashboard v2",      status: "in_progress", due_date: future7,  assigned_to: admin.id },
+    { title: "Conduct Q3 code review and performance metrics",   status: "todo",        due_date: future30, assigned_to: bob.id   },
   ];
 
   for (const t of tasks) {

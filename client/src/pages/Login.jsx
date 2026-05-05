@@ -89,7 +89,7 @@ const Login = () => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <form onSubmit={handleSubmit} autoComplete="off" className="flex flex-col gap-5">
             <div>
               <label
                 htmlFor="login-email"
@@ -98,10 +98,11 @@ const Login = () => {
                 Email
               </label>
               <input
-                id="login-email"
+                id="login-user-identifier"
                 type="email"
+                name="user_identifier"
                 required
-                autoComplete="email"
+                autoComplete="new-password"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="tm-input"
@@ -111,16 +112,17 @@ const Login = () => {
 
             <div>
               <label
-                htmlFor="login-password"
+                htmlFor="login-user-secret"
                 className="mb-2 block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]"
               >
                 Password
               </label>
               <input
-                id="login-password"
+                id="login-user-secret"
                 type="password"
+                name="user_secret"
                 required
-                autoComplete="current-password"
+                autoComplete="new-password"
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 className="tm-input"
@@ -132,7 +134,7 @@ const Login = () => {
               {loading ? "Signing in…" : "Sign in"}
             </button>
           </form>
-
+          
           <div
             className="mt-6 rounded-xl border px-4 py-3 text-xs leading-relaxed"
             style={{

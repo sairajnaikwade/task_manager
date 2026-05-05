@@ -5,9 +5,13 @@
   "scripts": {
     "install": "cd client && npm install && cd ../server && npm install",
     "build": "cd client && npm run build && cd ../server && npm run build",
-    "start": "cd server && npm start"
+    "start": "cd server && npm start",
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\""
   },
   "engines": {
     "node": "20.x"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }

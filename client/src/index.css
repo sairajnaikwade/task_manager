@@ -75,6 +75,10 @@
     text-decoration: none;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   ::selection {
     background: rgba(129, 140, 248, 0.35);
     color: var(--color-text);

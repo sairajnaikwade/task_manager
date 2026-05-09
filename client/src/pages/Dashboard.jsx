@@ -206,7 +206,7 @@ const Dashboard = () => {
 
       {/* Filtered tasks */}
       <div
-        className="flex flex-col rounded-2xl border overflow-hidden"
+        className="flex flex-col rounded-2xl border"
         style={{
           background: "linear-gradient(165deg, var(--color-surface) 0%, var(--color-surface-elevated) 100%)",
           borderColor: "var(--color-border-strong)",
@@ -214,7 +214,7 @@ const Dashboard = () => {
         }}
       >
         <div
-          className="flex flex-col items-start justify-between gap-4 border-b p-4 sm:p-6 sm:flex-row sm:items-center"
+          className="flex flex-col items-start justify-between gap-4 border-b p-4 sm:p-6 sm:flex-row sm:items-center rounded-t-2xl"
           style={{ borderColor: "var(--color-border)" }}
         >
           <div className="flex items-center gap-3">
@@ -388,7 +388,7 @@ const Dashboard = () => {
           </div>
         </div>
         
-        <div className="overflow-x-auto scrollbar-thin">
+        <div className={`overflow-x-auto scrollbar-thin ${totalPages <= 1 ? 'rounded-b-2xl' : ''}`}>
           <table className="w-full border-collapse text-left">
             <thead>
               <tr
@@ -529,7 +529,7 @@ const Dashboard = () => {
         {/* Pagination Controls */}
         {totalPages > 1 && (
           <div
-            className="flex items-center justify-between border-t p-4"
+            className="flex items-center justify-between border-t p-4 rounded-b-2xl"
             style={{ borderColor: "var(--color-border)", background: "var(--color-bg-subtle)" }}
           >
             <p className="text-xs" style={{ color: "var(--color-muted)" }}>

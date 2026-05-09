@@ -410,15 +410,16 @@ const ProjectDetail = () => {
             <button
               id="btn-add-member"
               onClick={() => setShowMemberForm(true)}
-              className="flex items-center gap-1.5 text-xs font-semibold py-1.5 px-3 rounded-lg transition-all hover:bg-white/5"
+              className="flex items-center gap-1.5 text-xs font-semibold py-1.5 px-3 rounded-lg transition-all hover:translate-y-[-1px] hover:shadow-lg group"
               style={{
                 background: "var(--color-bg-subtle)",
                 color: "var(--color-text)",
-                border: "1px solid var(--color-border-strong)"
+                border: "1px solid var(--color-border-strong)",
+                boxShadow: "0 2px 8px -2px rgba(0,0,0,0.05)"
               }}
             >
-              <UserPlus size={14} />
-              Add Member
+              <UserPlus size={14} className="group-hover:scale-110 group-hover:text-indigo-500 transition-all" />
+              <span>Add Member</span>
             </button>
           )}
         </div>

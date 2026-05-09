@@ -3,10 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import PageWrapper from "../components/layout/PageWrapper";
 import StatusBadge from "../components/tasks/StatusBadge";
 import RoleGuard from "../routes/RoleGuard";
-import { Edit2, Trash2 } from "lucide-react";
+import { Edit2, Trash2, UserPlus } from "lucide-react";
 import { useProject, useUpdateProject, useDeleteProject } from "../hooks/useProjects";
 import { useCreateTask, useUpdateTask } from "../hooks/useTasks";
 import { useUserDirectory } from "../hooks/useUserDirectory";
+import { useAddMember, useRemoveMember } from "../hooks/useMembers";
 import { getFirstError } from "../utils/errorHandler";
 
 const COLUMNS = [
@@ -42,6 +43,35 @@ const ProjectDetail = () => {
   const myRole = myMembership?.role ?? "member";
   const isAdmin = user?.role === "admin";
   const canEditProject = isAdmin || project?.owner?.id === user?.id;
+
+  const [showMemberForm, setShowMemberForm] = useState(false);
+  const [memberForm, setMemberForm]         = useState({ user_id: "", role: "member" });
+  const [memberError, setMemberError]       = useState(null);
+
+  const addMember = useAddMember();
+  const removeMember = useRemoveMember();
+
+  const handleAddMember = async (e) => {
+    e.preventDefault();
+    setMemberError(null);
+    if (!memberForm.user_id) {
+      setMemberError("Please select a user");
+      return;
+    }
+    const res = await addMember.mutateAsync({ project_id: id, ...memberForm });
+    if (res.status !== "success") {
+      setMemberError(getFirstError(res.messages));
+      return;
+    }
+    setShowMemberForm(false);
+    setMemberForm({ user_id: "", role: "member" });
+  };
+
+  const handleRemoveMember = async (userId) => {
+    if (window.confirm("Are you sure you want to remove this member?")) {
+      await removeMember.mutateAsync({ project_id: id, user_id: userId });
+    }
+  };
 
   const handleCreateTask = async (e) => {
     e.preventDefault();
@@ -251,6 +281,57 @@ const ProjectDetail = () => {
           </div>
         </div>
       )}
+      {/* Add member modal */}
+      {showMemberForm && (
+        <div className="tm-modal-overlay z-[100]">
+          <div
+            className="w-full max-w-md rounded-2xl border p-8"
+            style={{
+              background: "linear-gradient(165deg, var(--color-surface) 0%, var(--color-surface-elevated) 100%)",
+              borderColor: "var(--color-border-strong)",
+              boxShadow: "var(--shadow-float)",
+            }}
+          >
+            <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--color-text)" }}>Add Team Member</h2>
+            {memberError && <p className="text-sm mb-3" style={{ color: "var(--color-danger)" }}>{memberError}</p>}
+            <form onSubmit={handleAddMember} className="flex flex-col gap-4">
+              <div>
+                <label className="block text-[10px] font-bold uppercase mb-1" style={{ color: "var(--color-muted)" }}>Select User</label>
+                <select
+                  required
+                  value={memberForm.user_id}
+                  onChange={(e) => setMemberForm({ ...memberForm, user_id: e.target.value })}
+                  className="tm-input"
+                >
+                  <option value="">Choose a user...</option>
+                  {allUsers?.filter(u => !project.members?.some(m => m.user_id === u.id)).map((u) => (
+                    <option key={u.id} value={u.id}>{u.name} ({u.email})</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold uppercase mb-1" style={{ color: "var(--color-muted)" }}>Role</label>
+                <select
+                  value={memberForm.role}
+                  onChange={(e) => setMemberForm({ ...memberForm, role: e.target.value })}
+                  className="tm-input"
+                >
+                  <option value="member">Member (Can manage tasks)</option>
+                  <option value="admin">Admin (Can manage project & members)</option>
+                </select>
+              </div>
+              <div className="flex gap-3 mt-2">
+                <button type="submit" disabled={addMember.isPending} className="tm-btn-primary flex-1 py-2.5">
+                  {addMember.isPending ? "Adding…" : "Add Member"}
+                </button>
+                <button type="button" onClick={() => setShowMemberForm(false)} className="tm-btn-secondary flex-1 py-2.5">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Kanban board */}
       <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -321,9 +402,26 @@ const ProjectDetail = () => {
           boxShadow: "var(--shadow-card)",
         }}
       >
-        <h2 className="mb-4 text-lg font-bold tracking-tight text-[var(--color-text)]">
-          Team Members ({project.members?.length ?? 0})
-        </h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold tracking-tight text-[var(--color-text)]">
+            Team Members ({project.members?.length ?? 0})
+          </h2>
+          {(isAdmin || myRole === "admin") && (
+            <button
+              id="btn-add-member"
+              onClick={() => setShowMemberForm(true)}
+              className="flex items-center gap-1.5 text-xs font-semibold py-1.5 px-3 rounded-lg transition-all hover:bg-white/5"
+              style={{
+                background: "var(--color-bg-subtle)",
+                color: "var(--color-text)",
+                border: "1px solid var(--color-border-strong)"
+              }}
+            >
+              <UserPlus size={14} />
+              Add Member
+            </button>
+          )}
+        </div>
         <div className="flex flex-col gap-2">
           {project.members?.map((m) => (
             <div key={m.id} className="flex items-center justify-between py-2 border-b last:border-0"
@@ -340,10 +438,21 @@ const ProjectDetail = () => {
                   <p className="text-xs" style={{ color: "var(--color-muted)" }}>{m.user?.email}</p>
                 </div>
               </div>
-              <span className="text-xs px-2 py-0.5 rounded-full capitalize"
-                style={{ background: m.role === "admin" ? "#312e81" : "#1e293b", color: m.role === "admin" ? "#a5b4fc" : "#94a3b8" }}>
-                {m.role}
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="text-xs px-2 py-0.5 rounded-full capitalize"
+                  style={{ background: m.role === "admin" ? "#312e81" : "#1e293b", color: m.role === "admin" ? "#a5b4fc" : "#94a3b8" }}>
+                  {m.role}
+                </span>
+                {(isAdmin || myRole === "admin") && m.user_id !== user?.id && m.user_id !== project.owner_id && (
+                  <button
+                    onClick={() => handleRemoveMember(m.user_id)}
+                    className="p-1 rounded hover:bg-red-500/10 transition-colors text-red-500"
+                    title="Remove Member"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>

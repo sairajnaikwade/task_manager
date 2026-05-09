@@ -23,8 +23,8 @@ export const listTasks = async (req, res) => {
 
     andClauses.push({
       is_active: !showDeleted,
-      project_id: { in: projectIds },
       OR: [
+        { project_id: { in: projectIds } },
         { assigned_to: req.user.id },
         { created_by: req.user.id },
       ],
